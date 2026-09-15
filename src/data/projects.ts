@@ -3,71 +3,58 @@
  *  PROJECTS CONFIG — Single source of truth for the Projects section
  * ============================================================================
  *
- *  HOW TO ADD A PROJECT
- *  -------------------
- *  1. Append a new object to the `projects` array below, matching the `Project`
- *     type. Each object must satisfy the TypeScript type — the editor will
- *     show errors if a required field is missing or a value is invalid.
- *  2. Save the file. The dev server hot-reloads and the new card appears
- *     instantly on the Projects section of the home page.
+ *  HOW TO ADD / EDIT A PROJECT
+ *  ---------------------------
+ *  1. Append a new object to the `projects` array below, matching the
+ *     `Project` type. Your editor will flag any missing/invalid field.
+ *  2. Save the file. The dev server hot-reloads and the card appears on the
+ *     home page instantly — no layout code to touch.
  *
  *  FIELD REFERENCE
  *  ---------------
- *    name        (string, required)              — Display name of the project.
- *    description (string, required)              — One short paragraph (1–3
- *                                                  sentences). Avoid markdown.
- *    image       (string, required)              — Thumbnail image URL.
- *                                                  • LOCAL FILE:  put the image
- *                                                    in /public/projects/ (e.g.
- *                                                    /public/projects/adc.png)
- *                                                    and reference it as
- *                                                    "/projects/adc.png".
- *                                                  • EXTERNAL URL: paste any
- *                                                    https://... URL directly.
- *                                                  If the image fails to load,
- *                                                    a clean placeholder (the
- *                                                    project's initial on a
- *                                                    muted background) is shown
- *                                                    automatically — no broken
- *                                                    image icon ever appears.
- *    tech        (string[], required)            — Tech stack badges, e.g.
- *                                                  ["Cadence Virtuoso", "C++"].
- *    platform    ("Vercel" | "Netlify" |         — Where the live demo is
- *                 "GitHub Pages" | "Other",        hosted. Drives the small
- *                 required)                         colored platform dot/icon.
- *    repoUrl     (string, required)              — Link to the source code
- *                                                  (GitHub repo URL, must start
- *                                                  with https://).
- *    liveUrl     (string, optional)              — Link to the deployed live
- *                                                  demo. OMIT this field (or
- *                                                  leave it as an empty string
- *                                                  "") when there is no live
- *                                                  demo; in that case the
- *                                                  "Live Demo" button is hidden
- *                                                  automatically.
+ *    name        (string,  REQUIRED)  Display name of the project.
+ *    description (string?, OPTIONAL)  One short paragraph (1–3 sentences).
+ *                                     Omit or leave "" to show a tasteful
+ *                                     "Description coming soon" note on the
+ *                                     card while you write it.
+ *    tech        (string[]?,OPTIONAL) Tech stack badges, e.g.
+ *                                     ["Next.js", "TypeScript"]. Omit or []
+ *                                     to hide the tech row.
+ *    platform    ("Vercel" | "Netlify" | "GitHub Pages" | "Other", REQUIRED)
+ *                                     Where the live demo is hosted. Drives
+ *                                     the small colored platform dot on the
+ *                                     card.
+ *    liveUrl     (string?, OPTIONAL)  Link to the deployed live demo.
+ *                                     Omit or "" to hide the "Live Demo"
+ *                                     button.
+ *    repoUrl     (string?, OPTIONAL)  Link to the source code (GitHub repo
+ *                                     URL). Omit or "" to hide the
+ *                                     "View Code" button.
+ *
+ *  NOTE: There is intentionally NO image/screenshot field — this portfolio
+ *  uses a clean, text-only card design. Just fill in the text fields above.
  *
  *  FULL COMMENTED EXAMPLE (copy, uncomment, and edit):
  *  -----------------------------------------------------------------
  *  {
- *    name: "90nm SRAM Cell Design",
+ *    name: "AR PassVault",
  *    description:
- *      "Designed and simulated a 6T SRAM bitcell in Cadence Virtuoso at the" +
- *      " 90nm node. Performed DRC/LVS clean layout, static-noise-margin" +
- *      " analysis, and read/write margin characterization across process" +
- *      " corners.",
- *    image: "/projects/sram-cell.png",
- *    tech: ["Cadence Virtuoso", "DRC/LVS", "SPICE", "CMOS 90nm"],
- *    platform: "GitHub Pages",
- *    repoUrl: "https://github.com/ar-bappy-171/sram-cell-design",
- *    liveUrl: "https://ar-bappy-171.github.io/sram-cell-design/",
+ *      "A secure, client-side password vault that encrypts credentials" +
+ *      " in the browser and syncs nothing to a server. Built to solve the" +
+ *      " problem of managing dozens of strong, unique passwords without" +
+ *      " trusting a third party with the plaintext.",
+ *    tech: ["Next.js", "TypeScript", "WebCrypto"],
+ *    platform: "Vercel",
+ *    liveUrl: "https://arpassvault.vercel.app/",
+ *    repoUrl: "https://github.com/ar-bappy-171/ar-passvault",
  *  },
  *  -----------------------------------------------------------------
  *
  *  NOTES
  *  -----
  *  • Leave the array empty (`[]`) to show the friendly
- *    "No projects added yet — check back soon!" empty state on the page.
- *  • The `Project` type is also exported so other components can import it.
+ *    "No projects added yet — check back soon!" empty state.
+ *  • The `Project` type is exported so other components can import it.
  * ============================================================================
  */
 
@@ -76,33 +63,61 @@ export type ProjectPlatform = "Vercel" | "Netlify" | "GitHub Pages" | "Other";
 export interface Project {
   /** Display name of the project. */
   name: string;
-  /** One short paragraph describing the project (1–3 sentences). */
-  description: string;
-  /**
-   * Thumbnail image URL.
-   * Local file: put it in /public/projects/ and use "/projects/yourimage.png".
-   * External URL: any https://... URL.
-   * Falls back to a clean placeholder if loading fails.
-   */
-  image: string;
-  /** Tech stack badges, e.g. ["Cadence Virtuoso", "C++"]. */
-  tech: string[];
-  /** Where the live demo is hosted. Drives the platform dot/icon. */
+  /** One short paragraph (1–3 sentences). Optional — omit for a "coming soon" note. */
+  description?: string;
+  /** Tech stack badges. Optional — omit or [] to hide the tech row. */
+  tech?: string[];
+  /** Where the live demo is hosted. Drives the platform dot. */
   platform: ProjectPlatform;
-  /** Link to the source code (GitHub repo URL). */
-  repoUrl: string;
-  /**
-   * Optional link to the deployed live demo.
-   * Omit or set to "" to hide the "Live Demo" button.
-   */
+  /** Optional link to the deployed live demo. Omit/"" to hide the Live Demo button. */
   liveUrl?: string;
+  /** Optional link to the source code (GitHub repo). Omit/"" to hide the View Code button. */
+  repoUrl?: string;
 }
 
 /**
  * The list of projects rendered on the home page.
  *
- * Currently EMPTY by design — add your real projects above following the
- * commented example. While empty, the Projects section shows a friendly
- * "No projects added yet — check back soon!" message.
+ * Currently populated with the live Vercel deployments you provided.
+ * Each entry below is a REAL project — only the `name` was derived from the
+ * URL slug; `liveUrl` and `platform` come directly from your list. Please
+ * send the missing per-project details (description, tech stack, GitHub repo
+ * URL) and they'll be dropped straight in here.
  */
-export const projects: Project[] = [];
+export const projects: Project[] = [
+  {
+    name: "Personal Website",
+    platform: "Vercel",
+    liveUrl: "https://asiburrahmanbappy.vercel.app/",
+  },
+  {
+    name: "AR PassVault",
+    platform: "Vercel",
+    liveUrl: "https://arpassvault.vercel.app/",
+  },
+  {
+    name: "AR Prompt Studio",
+    platform: "Vercel",
+    liveUrl: "https://arpromptstudio.vercel.app/",
+  },
+  {
+    name: "AR Prompt Vault",
+    platform: "Vercel",
+    liveUrl: "https://arpromptvault.vercel.app/",
+  },
+  {
+    name: "AR Stream",
+    platform: "Vercel",
+    liveUrl: "https://arstream.vercel.app/",
+  },
+  {
+    name: "AR Actors Library",
+    platform: "Vercel",
+    liveUrl: "https://ar-actors-library.vercel.app/",
+  },
+  {
+    name: "AR Power Web",
+    platform: "Vercel",
+    liveUrl: "https://ar-power-web.vercel.app/",
+  },
+];

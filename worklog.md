@@ -28,3 +28,25 @@ Stage Summary:
 - Key decisions: (1) Accent color = emerald (`oklch(0.62 0.15 162)` light / `oklch(0.75 0.15 162)` dark) — tasteful, modern, NOT indigo/blue, consistent across CTAs, badges, icons, hover states. (2) Default theme = light with `enableSystem` so users on dark OS get dark automatically; toggle persists via next-themes. (3) Projects config ships EMPTY (`[]`) by design — the Projects section renders a friendly centered "No projects added yet — check back soon!" empty state, so the user can drop in real entries later without touching any component code. (4) Contact form posts to a clearly-marked Formspree placeholder constant `FORMSPREE_ENDPOINT`. (5) Plausible script is commented out in `<head>` with enable instructions; @vercel/analytics `<Analytics />` is mounted and inert off-Vercel.
 - `bun run lint` passes clean (0 errors, 0 warnings).
 - Only user-visible route is `/` as required. Dev server runs on port 3000 (parent-managed); not forced to static export.
+
+---
+Task ID: 7
+Agent: main (orchestrator)
+Task: Remove Skills section + screenshots from project cards; populate projects config with user's 7 Vercel deployments
+
+Work Log:
+- Read current page.tsx, site-header.tsx, projects.ts, project-card.tsx, projects-section.tsx to understand structure.
+- Edited src/app/page.tsx: removed the entire Skills <section> (5 categorized cards), removed skillCategories array + SkillCategory interface, removed now-unused lucide imports (Cpu, CircuitBoard, Code2, Wrench, GitBranch, LucideIcon).
+- Edited src/components/site-header.tsx: removed "Skills" entry from navLinks array (both desktop nav and mobile Sheet menu now show only Projects + Contact).
+- Rewrote src/data/projects.ts: removed `image` field from Project type entirely (text-only card design per user request). Made description, tech, and repoUrl OPTIONAL. Kept platform required + liveUrl optional. Rewrote the comment block to document the new structure + a fresh commented example. Populated the `projects` array with the user's 7 Vercel deployments: Personal Website, AR PassVault, AR Prompt Studio, AR Prompt Vault, AR Stream, AR Actors Library, AR Power Web. Each has platform="Vercel" + liveUrl filled. Names were derived from URL slugs (flagged to user for confirmation). description/tech/repoUrl left unset → cards render a tasteful "Description coming soon." note and hide the View Code button until user provides them.
+- Rewrote src/components/project-card.tsx: removed all image/thumbnail logic (shimmer, fade-in, fallback). Removed "use client" (no longer needs client-side state). New clean text-only card: header row (name + platform badge), description (or muted "Description coming soon." italic note), tech badges (hidden if none), action buttons (View Code hidden if no repoUrl, Live Demo hidden if no liveUrl, "Links coming soon" muted note if neither).
+- Ran bun run lint — clean, 0 errors, 0 warnings.
+- Browser-verified with agent-browser: (1) Skills region is GONE (regions now Hero → Projects → Contact only). (2) All 7 project cards render with correct names. (3) 7 "Live Demo" links pointing to the exact Vercel URLs the user provided, 0 "View Code" buttons (correctly hidden, no repos yet). (4) "Description coming soon." shows gracefully. (5) "Vercel" platform badge on each card. (6) Clicked a Live Demo button → correctly navigated to asiburrahmanbappy.vercel.app (confirmed the link works). No console/runtime errors.
+
+Stage Summary:
+- Skills section: REMOVED from page + nav.
+- Screenshots/thumbnails: REMOVED from card + `image` field removed from Project type.
+- Projects config: populated with 7 real entries (Vercel platform + live URLs). Other fields made optional and left for user to fill.
+- Still pending from user: per-project (a) display name confirmation, (b) GitHub repo URL, (c) one-paragraph description, (d) tech stack. Plus two decisions: hosting target for THIS portfolio (Vercel/Netlify) and contact-form service (Formspree/Netlify Forms).
+- Discovery: asiburrahmanbappy.vercel.app is the user's full existing portfolio (~14 detailed EEE projects: Training Management, Vibration Meter, 10T SRAM, etc.) — flagged to user in case they want those added as cards too.
+- bun run lint passes clean. Dev server compiling cleanly.

@@ -1,16 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Mail,
-  Github,
-  ExternalLink,
-  Cpu,
-  CircuitBoard,
-  Code2,
-  Wrench,
-  GitBranch,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight, Mail, Github, ExternalLink } from "lucide-react";
 
 import { siteConfig } from "@/data/site";
 import { SiteHeader } from "@/components/site-header";
@@ -34,52 +23,6 @@ function OrcidMark({ className }: { className?: string }) {
     </svg>
   );
 }
-
-interface SkillCategory {
-  title: string;
-  icon: LucideIcon;
-  skills: string[];
-}
-
-const skillCategories: SkillCategory[] = [
-  {
-    title: "VLSI & IC Design",
-    icon: CircuitBoard,
-    skills: [
-      "Cadence Virtuoso",
-      "DRC / LVS Verification",
-      "SRAM Cell Design",
-      "CMOS (90nm / 45nm)",
-      "SPICE Simulation",
-      "Layout Design",
-    ],
-  },
-  {
-    title: "Programming",
-    icon: Code2,
-    skills: ["C++", "Python", "MATLAB"],
-  },
-  {
-    title: "EDA & Simulation Tools",
-    icon: Cpu,
-    skills: ["Cadence Virtuoso", "LTspice", "MATLAB / Simulink"],
-  },
-  {
-    title: "Hardware & Electronics",
-    icon: Wrench,
-    skills: [
-      "Digital Circuit Design",
-      "Analog Circuit Design",
-      "Microcontrollers",
-      "Oscilloscope / Signal Analysis",
-    ],
-  },
-  {
-    title: "Software & Workflow",
-    icon: GitBranch,
-    skills: ["Git / GitHub", "VS Code", "LaTeX", "Linux"],
-  },
-];
 
 export default function Home() {
   return (
@@ -163,63 +106,6 @@ export default function Home() {
 
         {/* ================================================== PROJECTS */}
         <ProjectsSection />
-
-        {/* ==================================================== SKILLS */}
-        <section
-          id="skills"
-          aria-labelledby="skills-heading"
-          className="scroll-mt-20 border-t py-16 sm:py-24"
-        >
-          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-2">
-              <p className="text-brand text-sm font-medium tracking-wide uppercase">
-                Toolkit
-              </p>
-              <h2
-                id="skills-heading"
-                className="text-2xl font-bold tracking-tight sm:text-3xl"
-              >
-                Skills
-              </h2>
-              <p className="text-muted-foreground max-w-2xl text-sm sm:text-base">
-                From transistor-level layout to software automation — the
-                tools and technologies I work with.
-              </p>
-            </div>
-
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {skillCategories.map((cat) => {
-                const Icon = cat.icon;
-                return (
-                  <Card
-                    key={cat.title}
-                    className="gap-4 transition-all duration-200 hover:border-brand/50 hover:shadow-md"
-                  >
-                    <CardHeader className="px-6 pt-6">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <span className="bg-brand-muted/60 text-brand flex size-8 items-center justify-center rounded-lg">
-                          <Icon className="size-4" aria-hidden />
-                        </span>
-                        {cat.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-wrap gap-2 px-6 pb-6">
-                      {cat.skills.map((s) => (
-                        <Badge
-                          key={s}
-                          variant="secondary"
-                          className="font-normal"
-                        >
-                          {s}
-                        </Badge>
-                      ))}
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        </section>
 
         {/* =================================================== CONTACT */}
         <section
