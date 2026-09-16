@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Mail, Github } from "lucide-react";
 
 import { siteConfig } from "@/data/site";
@@ -80,12 +81,37 @@ export default function Home() {
                 Available for opportunities
               </Badge>
 
-              <h1
-                id="hero-heading"
-                className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
-              >
-                {siteConfig.name}
-              </h1>
+              <div className="flex items-center gap-4 sm:gap-6">
+                <h1
+                  id="hero-heading"
+                  className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
+                >
+                  {siteConfig.name}
+                </h1>
+                {/* Profile picture — circular, not downloadable.
+                     Download deterrents: draggable=false (no drag),
+                     select-none (no select), pointer-events-none on the image
+                     + a transparent overlay on top so right-click hits the
+                     overlay (not the image), preventing "Save image".
+                     NOTE: no technique is 100% — a determined user can still
+                     open DevTools or screenshot. This stops casual saving. */}
+                <div
+                  className="relative size-20 shrink-0 select-none overflow-hidden rounded-full ring-2 ring-brand/30 ring-offset-2 ring-offset-background sm:size-24 lg:size-28"
+                  aria-label="Profile photo of Md. Asibur Rahman Bappy"
+                >
+                  <Image
+                    src="/profile.jpg"
+                    alt="Md. Asibur Rahman Bappy"
+                    width={112}
+                    height={112}
+                    priority
+                    draggable={false}
+                    className="pointer-events-none h-full w-full object-cover"
+                  />
+                  {/* Transparent overlay intercepts right-clicks (pure CSS) */}
+                  <div className="absolute inset-0" aria-hidden />
+                </div>
+              </div>
 
               <p className="text-brand text-base font-medium sm:text-lg">
                 {siteConfig.title}

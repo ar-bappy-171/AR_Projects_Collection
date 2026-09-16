@@ -18,14 +18,11 @@ export function ProjectsSection() {
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-2">
-          <p className="text-brand text-sm font-medium tracking-wide uppercase">
-            Personal Project
-          </p>
           <h2
             id="projects-heading"
             className="text-2xl font-bold tracking-tight sm:text-3xl"
           >
-            Projects
+            Personal Project
           </h2>
           <p className="text-muted-foreground max-w-2xl text-sm sm:text-base">
             A selection of things I&apos;ve designed, built, and verified.

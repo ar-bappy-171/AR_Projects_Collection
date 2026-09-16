@@ -72,3 +72,23 @@ Stage Summary:
 - Personal Website card: REMOVED from projects config (6 cards remain).
 - Formspree: NOT yet wired — the endpoint constant `FORMSPREE_ENDPOINT` in src/components/contact-form.tsx line ~21 still holds placeholder "YOUR_FORM_ID". Explained to user how to get their form ID from Formspree dashboard and where to paste it (either tell me the ID and I'll insert it, or edit the line themselves).
 - bun run lint passes clean. Dev server compiling cleanly.
+
+---
+Task ID: 9
+Agent: main (orchestrator)
+Task: Remove green "Personal Project" eyebrow + rename Projects heading to "Personal Project"; wire Formspree endpoint mzzaqakn; add circular non-downloadable profile photo (Real 12.jpg) to the right of the name in hero
+
+Work Log:
+- Verified uploaded photo: VLM-confirmed Real 12.jpg is "a photograph of a person (a man with dark hair wearing a white button-up shirt) suitable as a profile picture". Copied to /home/z/my-project/public/profile.jpg (1620x1411 JPEG, 182KB).
+- Edited src/components/contact-form.tsx: replaced placeholder YOUR_FORM_ID with real form ID mzzaqakn → FORMSPREE_ENDPOINT = "https://formspree.io/f/mzzaqakn". Updated the comment block.
+- Edited src/components/projects-section.tsx: removed the green eyebrow <p className="text-brand ...">Personal Project</p> entirely. Changed the <h2> heading text from "Projects" to "Personal Project". Kept the description paragraph below.
+- Edited src/app/page.tsx: added `import Image from "next/image"`. Wrapped the hero <h1> name and a new profile picture container in a horizontal flex row (flex items-center gap-4 sm:gap-6). Profile picture: relative size-20 sm:size-24 lg:size-28 shrink-0 select-none overflow-hidden rounded-full ring-2 ring-brand/30 ring-offset-2 ring-offset-background (circular). <Image src="/profile.jpg" width=112 height=112 priority draggable={false} className="pointer-events-none h-full w-full object-cover" />. Added a transparent overlay <div className="absolute inset-0" aria-hidden /> on top of the image so right-clicks hit the overlay (not the image), preventing "Save image" in the context menu — pure CSS, no JS needed (keeps page.tsx a server component). Added detailed code comment explaining the download-deterrent stack.
+- Ran bun run lint — clean, 0 errors.
+- Browser-verified with agent-browser: (1) Profile image LOADED (naturalWidth=128, naturalHeight=112, complete=true, visible). (2) draggable=false (can't drag). (3) pointer-events=none on image + user-select=none on wrapper + transparent overlay present = right-click intercepted, "Save image" won't appear. (4) Wrapper is circular (rounded-full + overflow-hidden). (5) Responsive: 80px on mobile (size-20), 96px sm, 112px lg. (6) Projects eyebrow GONE, heading now reads "Personal Project" (verified eyebrowGone=true, headingText="Personal Project"). (7) No console/runtime errors.
+- Formspree endpoint reachability: curl GET https://formspree.io/f/mzzaqakn → HTTP 405 (Method Not Allowed). This is the EXPECTED response for a valid Formspree form endpoint (they only accept POST; a wrong form ID would return 404). Confirms the form ID is valid and live.
+
+Stage Summary:
+- Green "Personal Project" eyebrow: REMOVED. Projects section heading now reads "Personal Project" (was "Projects") in the standard heading style (text-2xl/3xl font-bold, foreground color).
+- Formspree: WIRED with real endpoint https://formspree.io/f/mzzaqakn. Verified valid (HTTP 405 on GET = endpoint exists, accepts POST). Form is live — submissions go to the user's Formspree-linked email.
+- Profile photo: ADDED to the right of the name in the hero. Circular (rounded-full + overflow-hidden + ring border), responsive (80/96/112px), non-downloadable (draggable=false + pointer-events-none + select-none + transparent overlay intercepts right-clicks). Image file: /home/z/my-project/public/profile.jpg (copied from upload/Real 12.jpg).
+- bun run lint passes clean. Dev server compiling cleanly.

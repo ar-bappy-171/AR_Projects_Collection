@@ -12,13 +12,12 @@ import { cn } from "@/lib/utils";
 // ============================================================================
 // Formspree endpoint
 // ----------------------------------------------------------------------------
-// Replace YOUR_FORM_ID with your Formspree form ID (get it at
-// https://formspree.io). After creating a form on Formspree, copy the form ID
-// from the integration URL, e.g. "https://formspree.io/f/abcdwxyz" -> "abcdwxyz",
-// and paste it below so the endpoint becomes
-// "https://formspree.io/f/abcdwxyz".
+// Your Formspree form endpoint. Messages submitted through this form are sent
+// to the email address linked to your Formspree account.
+// To change the recipient/form, replace the form ID (the "mzzaqakn" part)
+// with a new one from https://formspree.io.
 // ============================================================================
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mzzaqakn";
 
 type Status = "idle" | "loading" | "success" | "error";
 
