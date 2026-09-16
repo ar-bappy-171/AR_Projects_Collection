@@ -50,3 +50,25 @@ Stage Summary:
 - Still pending from user: per-project (a) display name confirmation, (b) GitHub repo URL, (c) one-paragraph description, (d) tech stack. Plus two decisions: hosting target for THIS portfolio (Vercel/Netlify) and contact-form service (Formspree/Netlify Forms).
 - Discovery: asiburrahmanbappy.vercel.app is the user's full existing portfolio (~14 detailed EEE projects: Training Management, Vibration Meter, 10T SRAM, etc.) — flagged to user in case they want those added as cards too.
 - bun run lint passes clean. Dev server compiling cleanly.
+
+---
+Task ID: 8
+Agent: main (orchestrator)
+Task: Remove hero summary; replace Existing Portfolio link with WhatsApp; rename Projects eyebrow to "Personal Project" + trim description; remove Personal Website card; explain Formspree wiring
+
+Work Log:
+- Edited src/data/site.ts: removed `summary` field; replaced `portfolio` field with `whatsapp` (https://wa.me/8801853265996) + `whatsappNumber` ("+880 1853265996") for display.
+- Edited src/app/page.tsx: removed the hero summary <p>{siteConfig.summary}</p> paragraph (hero now: badge → name → title → CTAs); added inline WhatsappMark SVG component (brand glyph); replaced the "Existing Portfolio" direct-channel card with a "WhatsApp" card showing the number; removed unused ExternalLink import.
+- Edited src/components/site-header.tsx: added inline WhatsappMark SVG; replaced desktop "Existing portfolio" IconLink with a "WhatsApp" IconLink; replaced mobile-menu "Existing Portfolio" anchor with a "WhatsApp" anchor; removed unused ExternalLink import.
+- Edited src/components/projects-section.tsx: eyebrow "Work" → "Personal Project"; description trimmed from "A selection of things I've designed, built, and verified — from VLSI layouts to software tools." to "A selection of things I've designed, built, and verified."
+- Edited src/data/projects.ts: removed the "Personal Website" entry (asiburrahmanbappy.vercel.app) — user doesn't want visitors reaching the existing portfolio from here. Now 6 projects remain.
+- Ran bun run lint — clean, 0 errors.
+- Browser-verified with agent-browser: (1) Hero summary GONE (hero text = badge + name + title + buttons only). (2) Projects eyebrow = "PERSONAL PROJECT", description trimmed. (3) 6 project cards, no "Personal Website". (4) Header icon links = GitHub, ORCID, WhatsApp, Email (no Existing portfolio). (5) Contact direct channels = Email, GitHub, ORCID, WhatsApp (+880 1853265996) — no Existing Portfolio. No console/runtime errors.
+
+Stage Summary:
+- Hero summary: REMOVED.
+- Existing Portfolio link: REMOVED everywhere (header desktop, header mobile menu, contact direct channels). Replaced with WhatsApp (wa.me/8801853265996, displays "+880 1853265996"). WhatsApp brand glyph added as inline SVG in both page.tsx and site-header.tsx.
+- Projects eyebrow: "Work" → "Personal Project". Description: trimmed (removed "from VLSI layouts to software tools").
+- Personal Website card: REMOVED from projects config (6 cards remain).
+- Formspree: NOT yet wired — the endpoint constant `FORMSPREE_ENDPOINT` in src/components/contact-form.tsx line ~21 still holds placeholder "YOUR_FORM_ID". Explained to user how to get their form ID from Formspree dashboard and where to paste it (either tell me the ID and I'll insert it, or edit the line themselves).
+- bun run lint passes clean. Dev server compiling cleanly.

@@ -86,11 +86,6 @@ export interface Project {
  */
 export const projects: Project[] = [
   {
-    name: "Personal Website",
-    platform: "Vercel",
-    liveUrl: "https://asiburrahmanbappy.vercel.app/",
-  },
-  {
     name: "AR PassVault",
     platform: "Vercel",
     liveUrl: "https://arpassvault.vercel.app/",
