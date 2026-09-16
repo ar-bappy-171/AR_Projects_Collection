@@ -23,8 +23,17 @@ const platformMeta: Record<
 /**
  * A single project card — clean, text-only design (no screenshot).
  *
- * Gracefully handles optional fields:
- *  - no description → shows a muted "Description coming soon" note
+ * Description behaviour:
+ *  - Desktop / tablet (hover available): the description is clamped to a
+ *    fixed number of lines so long text never grows the card. The full
+ *    description is shown in a native browser tooltip (title attribute) when
+ *    the user hovers the card.
+ *  - Mobile (no hover): the description is shown in full, since a bigger box
+ *    is fine on mobile and there's no hover to reveal a tooltip.
+ *    This is achieved with a `sm:line-clamp-3` class — line-clamp applies on
+ *    >= 640px viewports; on < 640px the full text flows naturally.
+ *
+ * Other optional fields:
  *  - no tech        → hides the tech row
  *  - no repoUrl     → hides the "View Code" button
  *  - no liveUrl     → hides the "Live Demo" button
@@ -35,9 +44,14 @@ export function ProjectCard({ project }: { project: Project }) {
   const showCode = Boolean(project.repoUrl);
   const showTech = Boolean(project.tech && project.tech.length > 0);
   const hasAnyAction = showLive || showCode;
+  const hasDescription = Boolean(project.description);
 
   return (
     <article
+      // `title` provides the native hover tooltip with the full description.
+      // It only triggers on hover (desktop) — mobile users see the full text
+      // in-card instead, so they're not left without the information.
+      title={hasDescription ? project.description : undefined}
       className={cn(
         "group bg-card text-card-foreground flex flex-col gap-4 rounded-xl border p-5 shadow-sm",
         "transition-all duration-200",
@@ -61,9 +75,20 @@ export function ProjectCard({ project }: { project: Project }) {
         </Badge>
       </div>
 
-      {/* Description (or a tasteful "coming soon" note) */}
-      {project.description ? (
-        <p className="text-muted-foreground text-sm leading-relaxed">
+      {/* Description
+          - Mobile (<640px): full text, card grows naturally — no clamp.
+          - Desktop (>=640px): clamped to 3 lines; hover the card to see the
+            full description in a native browser tooltip (via the `title`
+            attribute on the <article>). This keeps every card the same height
+            even when descriptions are very long. */}
+      {hasDescription ? (
+        <p
+          className={cn(
+            "text-muted-foreground text-sm leading-relaxed",
+            // line-clamp-3 ONLY at sm+ (desktop/tablet). On mobile, no clamp.
+            "sm:line-clamp-3"
+          )}
+        >
           {project.description}
         </p>
       ) : (

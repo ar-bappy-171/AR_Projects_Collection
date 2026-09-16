@@ -92,3 +92,22 @@ Stage Summary:
 - Formspree: WIRED with real endpoint https://formspree.io/f/mzzaqakn. Verified valid (HTTP 405 on GET = endpoint exists, accepts POST). Form is live — submissions go to the user's Formspree-linked email.
 - Profile photo: ADDED to the right of the name in the hero. Circular (rounded-full + overflow-hidden + ring border), responsive (80/96/112px), non-downloadable (draggable=false + pointer-events-none + select-none + transparent overlay intercepts right-clicks). Image file: /home/z/my-project/public/profile.jpg (copied from upload/Real 12.jpg).
 - bun run lint passes clean. Dev server compiling cleanly.
+
+---
+Task ID: 10
+Agent: main (orchestrator)
+Task: Enlarge profile photo + push to right side of name with generous spacing; add demo descriptions to all 6 projects; clamp long descriptions on desktop (hover tooltip shows full text) but show full text on mobile
+
+Work Log:
+- Edited src/app/page.tsx hero: changed the name+photo row from `flex items-center gap-4 sm:gap-6` (compact, photo hugging the name) to `flex w-full flex-wrap items-center justify-between gap-x-12 gap-y-6` (full-width row, name pushed left, photo pushed right via space-between, 48px horizontal gap, wraps gracefully on narrow screens). Enlarged photo: size-20/24/28 → size-32 (128px) / sm:size-40 (160px) / lg:size-48 (192px). Increased ring-offset from 2 to 4 for better visual separation. Updated Image width/height from 112 to 192 for higher-resolution rendering. Updated code comment to describe the new layout.
+- Rewrote src/components/project-card.tsx: added `title={project.description}` attribute on the <article> element → native browser hover tooltip shows the FULL description on desktop. Description <p> now has `sm:line-clamp-3` class → clamps to 3 lines ONLY at >=640px (desktop/tablet); on mobile (<640px) no clamp, full text flows and the card grows naturally. Added detailed JSDoc explaining the desktop-clamp + mobile-full + hover-tooltip behaviour. This keeps all desktop cards equal height regardless of description length, while never hiding info from mobile users (who have no hover).
+- Edited src/data/projects.ts: added a one-line demo description to all 6 projects. These are clearly-marked placeholder descriptions the user said they'll edit later. Each description is a single concise sentence describing what the project does. Projects: AR PassVault (password vault), AR Prompt Studio (AI prompt workspace), AR Prompt Vault (prompt library), AR Stream (streaming media app), AR Actors Library (actor reference library), AR Power Web (utilities/calculators).
+- Ran bun run lint — clean, 0 errors.
+- Browser-verified DESKTOP (1280px): (1) Photo is 192px (was 80-112px) — much bigger. (2) Photo positioned at right edge of hero row (justify-content: space-between); name on left, photo on right, 48px gap. (3) All 6 project cards have the `title` attribute set (hover tooltip works). (4) Descriptions clamped to 3 lines on desktop (webkit-lineClamp=3, overflow=hidden) — cards stay equal height. (5) No console/runtime errors.
+- Browser-verified MOBILE (390px): (1) Photo is 128px, wraps to below the name (flex-wrap: wrap). (2) Card descriptions NOT clamped (webkit-lineClamp=none, overflow=visible, height=91px) — full text shown, card grows naturally. (3) Tooltip title attribute still present for accessibility but mobile users get full text in-card so no info is hidden.
+
+Stage Summary:
+- Profile photo: enlarged to 128/160/192px (mobile/tablet/desktop), positioned at the right side of the name via justify-between with 48px gap. Wraps below the name on narrow mobile screens. Still circular + non-downloadable.
+- Project descriptions: all 6 now have one-line demo descriptions (user will edit later). Config file remains the single source of truth.
+- Description display behaviour: Desktop = clamped to 3 lines + hover tooltip shows full text (cards stay equal height). Mobile = full text shown in-card, card grows naturally (no clamp, no hidden info).
+- bun run lint passes clean. Dev server compiling cleanly.

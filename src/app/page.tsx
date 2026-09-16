@@ -81,14 +81,15 @@ export default function Home() {
                 Available for opportunities
               </Badge>
 
-              <div className="flex items-center gap-4 sm:gap-6">
+              <div className="flex w-full flex-wrap items-center justify-between gap-x-12 gap-y-6">
                 <h1
                   id="hero-heading"
                   className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
                 >
                   {siteConfig.name}
                 </h1>
-                {/* Profile picture — circular, not downloadable.
+                {/* Profile picture — circular, larger, pushed to the right
+                     side of the name with generous spacing. Not downloadable.
                      Download deterrents: draggable=false (no drag),
                      select-none (no select), pointer-events-none on the image
                      + a transparent overlay on top so right-click hits the
@@ -96,14 +97,14 @@ export default function Home() {
                      NOTE: no technique is 100% — a determined user can still
                      open DevTools or screenshot. This stops casual saving. */}
                 <div
-                  className="relative size-20 shrink-0 select-none overflow-hidden rounded-full ring-2 ring-brand/30 ring-offset-2 ring-offset-background sm:size-24 lg:size-28"
+                  className="relative size-32 shrink-0 select-none overflow-hidden rounded-full ring-2 ring-brand/30 ring-offset-4 ring-offset-background sm:size-40 lg:size-48"
                   aria-label="Profile photo of Md. Asibur Rahman Bappy"
                 >
                   <Image
                     src="/profile.jpg"
                     alt="Md. Asibur Rahman Bappy"
-                    width={112}
-                    height={112}
+                    width={192}
+                    height={192}
                     priority
                     draggable={false}
                     className="pointer-events-none h-full w-full object-cover"

@@ -87,31 +87,43 @@ export interface Project {
 export const projects: Project[] = [
   {
     name: "AR PassVault",
+    description:
+      "A secure, browser-based password vault that encrypts and stores your credentials locally — so your passwords stay private and accessible only to you.",
     platform: "Vercel",
     liveUrl: "https://arpassvault.vercel.app/",
   },
   {
     name: "AR Prompt Studio",
+    description:
+      "A workspace for crafting, testing, and refining AI prompts — built to help you write better prompts and get more reliable results from language models.",
     platform: "Vercel",
     liveUrl: "https://arpromptstudio.vercel.app/",
   },
   {
     name: "AR Prompt Vault",
+    description:
+      "A personal library to save, tag, and organize your most useful AI prompts so you can find and reuse them anytime in one centralized place.",
     platform: "Vercel",
     liveUrl: "https://arpromptvault.vercel.app/",
   },
   {
     name: "AR Stream",
+    description:
+      "A streaming-focused web app built to deliver smooth, responsive media playback and a clean viewing experience in the browser.",
     platform: "Vercel",
     liveUrl: "https://arstream.vercel.app/",
   },
   {
     name: "AR Actors Library",
+    description:
+      "A searchable reference library of actors — browse, search, and look up filmographies and details in a clean, fast interface.",
     platform: "Vercel",
     liveUrl: "https://ar-actors-library.vercel.app/",
   },
   {
     name: "AR Power Web",
+    description:
+      "A collection of handy web-based utilities and calculators — quick, everyday tools bundled into one fast, accessible site.",
     platform: "Vercel",
     liveUrl: "https://ar-power-web.vercel.app/",
   },
