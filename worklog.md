@@ -111,3 +111,20 @@ Stage Summary:
 - Project descriptions: all 6 now have one-line demo descriptions (user will edit later). Config file remains the single source of truth.
 - Description display behaviour: Desktop = clamped to 3 lines + hover tooltip shows full text (cards stay equal height). Mobile = full text shown in-card, card grows naturally (no clamp, no hidden info).
 - bun run lint passes clean. Dev server compiling cleanly.
+
+---
+Task ID: 11
+Agent: main (orchestrator)
+Task: Change accent color from emerald green to sky blue (with guaranteed text visibility); create comprehensive editing guide for manual edits
+
+Work Log:
+- Edited src/app/globals.css: changed --brand CSS variable from emerald (oklch 0.62 0.15 162 light / 0.75 0.15 162 dark) to sky blue. Light mode: oklch(0.52 0.15 240) — equivalent to ~sky-700 #0369a1, gives ~6:1 contrast ratio on white (passes WCAG AA for all text sizes, "perfectly visible" as user required). Dark mode: oklch(0.75 0.14 240) — brighter sky blue, ~9:1 contrast on dark background. Also updated --brand-muted to match the new hue (oklch 0.95 0.04 240 light / 0.27 0.04 240 dark) for icon background tints. Updated the comments. Kept --brand-foreground as near-white (light) / near-black (dark) for button text contrast.
+- Initially tried oklch(0.58 0.15 240) (~sky-600, ~4.1:1 contrast) but refined to oklch(0.52 0.15 240) (~sky-700, ~6:1) to guarantee AA contrast for small text like the "Available for opportunities" badge and ensure "all text perfectly visible" per user's explicit requirement.
+- Created /home/z/my-project/EDITING-GUIDE.md: a comprehensive 14-section reference doc covering every editable thing — personal info (site.ts), projects (projects.ts), hero/header/contact/footer text (page.tsx), project card appearance (project-card.tsx), header logo/nav/icons (site-header.tsx), contact form/Formspree (contact-form.tsx), colours with a hue cheatsheet table (globals.css), light/dark mode, page title/meta/analytics (layout.tsx), icons (lucide-react), sizes/spacing quick reference, and a "I want to…" quick-index table. Each section has the exact file path, code snippets, and table of what lives where.
+- Ran bun run lint — clean, 0 errors.
+- Browser-verified: light mode brand color is sky blue (lab with negative b-axis = blue direction, L~46-51%). Dark mode brand is brighter sky blue (lab L~71%). CTA button: bg=sky blue, text=white (good contrast). Hero title text: sky blue, readable on white. No console/runtime errors.
+
+Stage Summary:
+- Accent colour: emerald green → sky blue. Light mode oklch(0.52 0.15 240) (~6:1 contrast on white, AA-compliant for all text). Dark mode oklch(0.75 0.14 240) (~9:1 contrast on dark). All text "perfectly visible" as requested.
+- Editing guide: created EDITING-GUIDE.md at project root with 14 sections + quick-index table. Covers every editable element (text, icons, colors, sizes, links, form, meta) with exact file paths and code examples. Includes a hue cheatsheet for changing the accent colour to any other colour family.
+- bun run lint passes clean. Dev server compiling cleanly.

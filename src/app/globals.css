@@ -50,10 +50,10 @@
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
-  /* Emerald accent — tasteful, modern, not indigo/blue. */
-  --brand: oklch(0.62 0.15 162);
+  /* Sky blue accent — dark enough for AA text contrast (~6:1 on white). */
+  --brand: oklch(0.52 0.15 240);
   --brand-foreground: oklch(0.985 0 0);
-  --brand-muted: oklch(0.95 0.04 162);
+  --brand-muted: oklch(0.95 0.04 240);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -88,10 +88,10 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  /* Emerald accent — slightly brighter for dark mode legibility. */
-  --brand: oklch(0.75 0.15 162);
+  /* Sky blue accent — brighter for dark mode legibility. */
+  --brand: oklch(0.75 0.14 240);
   --brand-foreground: oklch(0.145 0 0);
-  --brand-muted: oklch(0.27 0.04 162);
+  --brand-muted: oklch(0.27 0.04 240);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
