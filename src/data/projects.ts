@@ -104,7 +104,7 @@ export const projects: Project[] = [
     description:
       "A personal library to save, tag, and organize your most useful AI prompts so you can find and reuse them anytime in one centralized place.",
     platform: "Vercel",
-    liveUrl: "https://arpromptvault.vercel.app/",
+    liveUrl: "https://arpromptlibrary.vercel.app/",
   },
   {
     name: "AR Stream",
