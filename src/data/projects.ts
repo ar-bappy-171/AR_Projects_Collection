@@ -118,7 +118,7 @@ export const projects: Project[] = [
     description:
       "A searchable reference library of actors — browse, search, and look up filmographies and details in a clean, fast interface.",
     platform: "Vercel",
-    liveUrl: "https://ar-actors-library.vercel.app/",
+    liveUrl: "https://aractresslibrary.vercel.app/",
   },
   {
     name: "AR Power Web",
